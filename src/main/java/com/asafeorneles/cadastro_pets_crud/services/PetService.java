@@ -8,10 +8,7 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class PetService {
@@ -26,7 +23,11 @@ public class PetService {
     }
 
     public List<Pet> findAllPets(){
-        return petReposirory.findAll();
+        List<Pet> pets = petReposirory.findAll();
+        if (pets.isEmpty()){
+            throw new PetNotFoundException("Pets not found"); // Talvez falar que nenhum pet foi cadastrado no sistema
+        }
+        return pets;
     }
 
     public Pet findById (UUID id){
@@ -43,5 +44,13 @@ public class PetService {
         Pet petFound = petReposirory.findById(id)
                 .orElseThrow(() -> new PetNotFoundException("Pet not found"));
         petReposirory.delete(petFound);
+    }
+
+    public List<Pet> findByName(String name){
+        List<Pet> petsFound = petReposirory.findByNameContainingIgnoreCase(name);
+        if (petsFound.isEmpty()){
+            throw new PetNotFoundException("Pet not found");
+        }
+        return petsFound;
     }
 }

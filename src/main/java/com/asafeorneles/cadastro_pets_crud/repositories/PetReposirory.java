@@ -4,9 +4,10 @@ import com.asafeorneles.cadastro_pets_crud.entities.Pet;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
 public interface PetReposirory extends JpaRepository<Pet, UUID> {
-
+    List<Pet> findByNameContainingIgnoreCase(String name);
 }

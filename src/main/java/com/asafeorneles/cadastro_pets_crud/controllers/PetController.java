@@ -32,9 +32,15 @@ public class PetController {
     }
 
     @GetMapping("/pets/{id}")
-    public ResponseEntity<?> findPetById(@PathVariable(value = "id") UUID id){
+    public ResponseEntity<Pet> findPetById(@PathVariable(value = "id") UUID id){
         Pet pet = petService.findById(id);
         return ResponseEntity.status(HttpStatus.OK).body(pet);
+    }
+
+    @GetMapping("/pets/name")
+    public ResponseEntity<List<Pet>> findPetByEmail(@RequestParam String name){
+        List<Pet> pets = petService.findByName(name);
+        return ResponseEntity.status(HttpStatus.OK).body(pets);
     }
 
     @PutMapping("/pets/{id}")
