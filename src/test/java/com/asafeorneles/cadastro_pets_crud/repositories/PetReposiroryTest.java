@@ -33,8 +33,7 @@ class PetReposiroryTest {
         PetRecordDto petRecordDto = new PetRecordDto(Tipo.CACHORRO, Sexo.FEMININO, name, "Tupirani", BigDecimal.valueOf(8.3), BigDecimal.valueOf(21.7), "Vira-Lata", "Rua A", "54", "Bairro B", "Belo Horizonte");
         this.createPet(petRecordDto);
         List<Pet> pets = petReposirory.findByNameContainingIgnoreCase(name);
-        assertTrue(!pets.isEmpty());
-
+        assertFalse(pets.isEmpty());
     }
 
     @Test
